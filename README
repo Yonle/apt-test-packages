@@ -1,0 +1,4 @@
+apt-test-package
+================
+A simple apt packages tester script.
+This script will install all package and test them one by one which will took a larger disk space.
