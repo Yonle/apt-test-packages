@@ -6,7 +6,7 @@ while read p; do
 	for bin in $(dpkg -L $p | grep "/usr/bin/"); do
 		fname=${p}-$(date -u)-$(basename $bin).log
 		timeout \
-			--signal=KILL 10 \
+			--signal=KILL 5 \
 			$bin 2> "$fname"
 		if echo $? | grep -qo "134\|139"; then
 			echo "Error for binary $bin, and has been stored to $fname."
