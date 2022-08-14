@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-while read p; do
+for $p in $(apt list | cut -d"/" -f1); do
 	if echo $p | grep -qo "Listing\.\.\.\|apt\|coreutils\|bash\|dpkg"; then continue; fi
 	apt install -y $p
 	for bin in $(dpkg -L $p | grep "/usr/bin/"); do
@@ -20,5 +20,4 @@ while read p; do
 	# Uncommenting this line could lead into accidental system packages deletion
 	# and therefore is not recommended to be enabled.
 	# apt autoremove -y $p
-done<<<$(apt list | cut -d"/" -f1)
-
+done
