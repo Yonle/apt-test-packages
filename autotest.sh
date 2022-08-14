@@ -9,7 +9,7 @@ for p in $(apt list | cut -d"/" -f1); do
 		echo "-----> Executing $(basename $bin)"
 		fname=autotest_logs/${p}-$(basename $bin).log
 		timeout \
-			--signal=KILL 3 \
+			--signal=KILL 5 \
 			$bin 2> "$fname"
 		if echo $? | grep -qo "134\|139"; then
 			echo "-----> Error for binary $bin, and has been stored to $fname."
