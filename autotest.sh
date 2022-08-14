@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
+mkdir -p autotest_logs
 for p in $(apt list | cut -d"/" -f1); do
-	if echo $p | grep -qo "Listing\.\.\.\|apt\|coreutils\|bash\|dpkg\|yes"; then continue; fi
+	if echo $p | grep -qo "Listing\.\.\.\|apt\|coreutils\|busybox\|bash\|dpkg\|yes"; then continue; fi
 	echo "-----> Installing $p"
 	yes | apt install $p
 	for bin in $(dpkg -L $p | grep "/usr/bin/"); do
 		echo "-----> Executing $(basename $bin)"
-		fname=${p}-$(date -u)-$(basename $bin).log
+		fname=autotest_logs/${p}-$(date -u)-$(basename $bin).log
 		timeout \
 			--signal=KILL 3 \
 			$bin 2> "$fname"
