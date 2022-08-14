@@ -7,7 +7,7 @@ for p in $(apt list | cut -d"/" -f1); do
 	yes | apt install $p
 	for bin in $(dpkg -L $p | grep "/usr/bin/"); do
 		echo "-----> Executing $(basename $bin)"
-		fname=autotest_logs/${p}-$(date -u)-$(basename $bin).log
+		fname=autotest_logs/${p}-$(basename $bin).log
 		timeout \
 			--signal=KILL 3 \
 			$bin 2> "$fname"
